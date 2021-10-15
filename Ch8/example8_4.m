@@ -1,4 +1,4 @@
-% Applied Nonlinear Control. P329. example 8.3: a first order plant
+% Applied Nonlinear Control. P329. example 8.4: simulation of a first-order nonlinear plant
 % 20210731
 clc
 close all
@@ -23,7 +23,7 @@ for i = 1:length(t)
 %     r = 4*sin(3*t(i));
     x_m = x_m + func_xmdot(x_m, r)* dt;
     % u
-    u = ar_hat * r+ ay_hat * y + af_hat * y^2;
+    u = ar_hat * r+ ay_hat * y + af_hat * y^2; % 控制器还是知道非线性项具体形式的，只是系数不知道
     % actual state
     y = y + func_ydot(y, u) * dt;
     % update ar_hat and ay_hat
