@@ -22,7 +22,7 @@ Kp = 2000*eye(2);
 Lambda = 20*eye(2);
 
 log_qddot = [];log_qdot = [];log_q = [];log_tau = [];
-log_qd = [];
+log_qd = []; log_ahat = [];
 
 %% estimated parameters
 acc = 0.8;
@@ -83,6 +83,7 @@ for t = 0:dt:T
     log_q = [log_q q];
     log_qdot = [log_qdot qdot];
     log_tau = [log_tau tau];
+    log_ahat = [log_ahat ahat];
     i = i+1;
 end
 
@@ -124,14 +125,37 @@ plot(t,log_tau(2,:));
 xlabel('time/s')
 title('control torque 1')
 
-%% functions
-function y = sat(x,upper,lower)
-    y = x;
-    for i=1:length(x)
-        if y(i)>upper
-            y(i) = upper;
-        elseif y(i)<lower
-            y(i) = lower;
-        end
-    end
-end
+figure(3);
+subplot(221)
+plot(t,log_ahat(1,:));
+hold on
+plot(t,a1*ones(1,length(t)));
+hold off
+xlabel('time/s')
+handle = title('$\hat{a}_1$');
+set(handle,'Interpreter','latex','FontSize',12);
+% set(gca, 'Position', [0.08 0.05 0.88 0.36])
+subplot(222)
+plot(t,log_ahat(2,:));
+hold on
+plot(t,a2*ones(1,length(t)));
+hold off
+xlabel('time/s')
+handle = title('$\hat{a}_2$');
+set(handle,'Interpreter','latex','FontSize',12);
+subplot(223)
+plot(t,log_ahat(3,:));
+hold on
+plot(t,a3*ones(1,length(t)));
+hold off
+xlabel('time/s')
+handle = title('$\hat{a}_3$');
+set(handle,'Interpreter','latex','FontSize',12);
+subplot(224)
+plot(t,log_ahat(4,:));
+hold on
+plot(t,a4*ones(1,length(t)));
+hold off
+xlabel('time/s')
+handle = title('$\hat{a}_4$');
+set(handle,'Interpreter','latex','FontSize',12);
